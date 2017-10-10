@@ -49,6 +49,12 @@ gem 'coderay'
 gem 'github_api'
 gem 'omniauth-twitter'
 gem 'web-console'
+gem 'bullet', group: 'development'
+gem 'draper'
+gem 'cloudinary'
+gem 'easy_static_pages'#, github: 'gorails/easy_static_pages', branch: 'master'
+gem 'go_blog'#, github: 'gorails/go_blog', branch: 'master'
+gem 'summernote-rails'
 
 
 group :development, :test do
@@ -59,13 +65,15 @@ group :development, :test do
   gem 'listen'
   gem 'spring'
   gem 'spring-watcher-listen'
-  gem "factory_girl_rails"
+  gem 'factory_girl_rails'
   gem 'dotenv'
   gem 'better_errors'
   gem 'binding_of_caller'
   gem 'rails_layout'
   gem 'rails-erd'
   gem 'rails_real_favicon'
+  gem 'ffaker'
+  gem 'rails-controller-testing'
 end
 
 

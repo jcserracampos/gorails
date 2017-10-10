@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161030015207) do
+ActiveRecord::Schema.define(version: 20171008203759) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -51,6 +51,19 @@ ActiveRecord::Schema.define(version: 20161030015207) do
     t.datetime "updated_at", null: false
     t.string "file"
     t.index ["origin_type", "origin_id"], name: "index_attachments_on_origin_type_and_origin_id"
+  end
+
+  create_table "blog_posts", force: :cascade do |t|
+    t.string "title"
+    t.text "teaser"
+    t.text "body", null: false
+    t.boolean "draft", default: false
+    t.datetime "published_at"
+    t.integer "user_id", null: false
+    t.string "custom_url"
+    t.integer "access_count", default: 0
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "commontator_comments", force: :cascade do |t|
@@ -104,6 +117,21 @@ ActiveRecord::Schema.define(version: 20161030015207) do
     t.boolean "status"
   end
 
+  create_table "financial_transactions", force: :cascade do |t|
+    t.string "object"
+    t.string "origin"
+    t.string "transaction_type", limit: 1
+    t.decimal "value", precision: 13, scale: 2
+    t.bigint "user_id"
+    t.datetime "payment_date"
+    t.string "payment_method"
+    t.boolean "consolidated", default: false, null: false
+    t.datetime "consolidation_date"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_financial_transactions_on_user_id"
+  end
+
   create_table "gifts", force: :cascade do |t|
     t.string "name"
     t.text "description"
@@ -137,6 +165,15 @@ ActiveRecord::Schema.define(version: 20161030015207) do
     t.datetime "updated_at", null: false
     t.text "description"
     t.index ["link_category_id"], name: "index_links_on_link_category_id"
+  end
+
+  create_table "pages", force: :cascade do |t|
+    t.string "name"
+    t.string "permalink"
+    t.text "content"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["permalink"], name: "index_pages_on_permalink"
   end
 
   create_table "partners", force: :cascade do |t|
@@ -264,6 +301,7 @@ ActiveRecord::Schema.define(version: 20161030015207) do
     t.index ["user_id"], name: "index_winners_on_user_id"
   end
 
+  add_foreign_key "financial_transactions", "users"
   add_foreign_key "gifts", "events"
   add_foreign_key "images", "albums"
   add_foreign_key "links", "link_categories"

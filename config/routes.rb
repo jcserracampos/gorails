@@ -1,11 +1,16 @@
 Rails.application.routes.draw do
+  root to: "home#index"
+
+  resources :pages, path:'paginas'
+
+  resources :financial_transactions,path: 'transparencia'
   resources :social_network_types
   resources :winners
   get 'activities/index'
 
   resources :images
   resources :albums
-  resources :links, :path => "links" do
+  resources :links, path: "links" do
     collection do
       get 'uteis'
     end
@@ -19,11 +24,10 @@ Rails.application.routes.draw do
     resources :registrations, controller: 'event_registrations'
   end
   resources :attachments
-  devise_for :users, :controllers => {registrations: 'registrations', omniauth_callbacks: "omniauth_callbacks"}
-  resources :users, :only => [:show]
+  devise_for :users, controllers: {registrations: 'registrations', omniauth_callbacks: "omniauth_callbacks"}
+  resources :users, only: [:show,:index]
 
-  get "/paginas/:pagina" => "paginas#show"
-  root "paginas#show", pagina: "home"
+  # get "/paginas/:pagina" => "paginas#show"
   get 'contact', to: 'messages#new', as: 'contact'
   post 'messages/subscribe', to: 'messages#subscribe'
   post 'contact', to: 'messages#create'
